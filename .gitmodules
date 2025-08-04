@@ -1,0 +1,4 @@
+[submodule "downstream"]
+	path = downstream
+	url = https://github.com/glfw/glfw.git
+	branch = 7b6aead9fb88b3623e3b3725ebb42670cbe4c579
