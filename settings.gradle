@@ -13,7 +13,7 @@ plugins {
     id 'net.derfruhling.spacemaven.build-cache' version '0.1.0'
 }
 
-include 'spaceport:project'
+include 'spaceport:glfw'
 
 include('downstream')
 

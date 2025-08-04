@@ -1,0 +1,65 @@
+import net.derfruhling.gradle.ArtifactUsageInformation
+import net.derfruhling.gradle.NativeTarget
+
+plugins {
+    id 'net.derfruhling.cmake-wrapper'
+    id 'net.derfruhling.spm.publisher'
+    id 'maven-publish'
+}
+
+dependencies {
+    // Spaceports can depend on other spaceports.
+    // These dependencies will be resolved and appear in the final artifact.
+    // The final linking step should transitively include everything specified here.
+    //
+    // Any compile / runtime artifacts required to use this spaceport should be specified
+    // here.
+
+    //implementation project(':spaceport:gtest-main')
+    //api project(':spaceport:gtest')
+}
+
+spmInfo {
+    register(ArtifactUsageInformation) {
+        platform(NativeTarget.WINDOWS_X64) {
+            requireCompileDefinition GLFW_DLL: true
+        }
+    }
+}
+
+cmake {
+    publicHeadersArchive = tasks.register('packagePublicHeaders', Zip) {
+        // TODO update includes directory
+        from(rootProject.layout.projectDirectory.dir('downstream').dir('include')) {
+            include 'GLFW/**/*.h'
+        }
+
+        into '/'
+
+        archiveClassifier = 'api'
+        archiveBaseName = project.name
+        archiveVersion = project.version as String
+    }
+
+    configurations {
+        sharedLibrary {
+            outputKind 'shared'
+
+            define BUILD_SHARED_LIBS: true, GLFW_BUILD_EXAMPLES: false, GLFW_BUILD_TESTS: false
+
+            targets {
+                // TODO update target name
+                register('glfw') {
+                    target 'glfw'
+                    outputSubDir 'src'
+                }
+            }
+
+            platforms {
+                linuxX64.define CMAKE_BUILD_WAYLAND: true, CMAKE_BUILD_X11: true
+                macosAll.define CMAKE_BUILD_COCOA: true
+                windowsX64.define CMAKE_BUILD_WIN32: true, USE_MSVC_RUNTIME_LIBRARY_DLL: true
+            }
+        }
+    }
+}
