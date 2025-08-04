@@ -54,9 +54,9 @@ cmake {
                     target 'glfw'
                     outputSubDir 'src'
 
-                    /*if(NativeTarget.current != NativeTarget.LINUX_X64) {
+                    if(NativeTarget.current == NativeTarget.WINDOWS_X64) {
                         artifactBaseName = 'glfw3'
-                    }*/
+                    }
                 }
             }
 
