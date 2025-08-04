@@ -6,7 +6,7 @@ on:
       - "**/*.md"
 
 env:
-  SPACEPORT_READY: false # TODO change to `true` when ready
+  SPACEPORT_READY: true
 
 jobs:
   build-and-publish:

@@ -4,4 +4,4 @@ plugins {
 }
 
 group = 'net.derfruhling.spaceport'
-version = '1.0.0' // TODO Update version
+version = '3.4.0'

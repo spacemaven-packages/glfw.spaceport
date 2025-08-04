@@ -23,6 +23,16 @@ spmInfo {
     register(ArtifactUsageInformation) {
         platform(NativeTarget.WINDOWS_X64) {
             requireCompileDefinition GLFW_DLL: true
+
+            expectLibrary 'gdi32'
+        }
+
+        platform(NativeTarget.LINUX_X64) {
+            expectLibrary 'rt', 'm', 'dl'
+        }
+
+        platform(NativeTarget.MACOS_X64, NativeTarget.MACOS_AARCH64) {
+            expectFramework 'Cocoa', 'IOKit', 'CoreFoundation'
         }
     }
 }
@@ -42,19 +52,17 @@ cmake {
     }
 
     configurations {
-        sharedLibrary {
-            outputKind 'shared'
+        staticLibrary {
+            outputKind 'static'
 
-            define BUILD_SHARED_LIBS: true, GLFW_BUILD_EXAMPLES: false, GLFW_BUILD_TESTS: false
+            define BUILD_SHARED_LIBS: false, GLFW_BUILD_EXAMPLES: false, GLFW_BUILD_TESTS: false
 
             targets {
                 register('glfw') {
                     target 'glfw'
                     outputSubDir 'src'
 
-                    if(NativeTarget.current != NativeTarget.LINUX_X64) {
-                        artifactBaseName = 'glfw3'
-                    }
+                    artifactBaseName = 'glfw3'
                 }
             }
 
