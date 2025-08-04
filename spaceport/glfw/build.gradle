@@ -64,7 +64,7 @@ cmake {
                 linuxX64.define CMAKE_BUILD_WAYLAND: true, CMAKE_BUILD_X11: true
                 macosAll.define CMAKE_BUILD_COCOA: true
                 windowsX64.define CMAKE_BUILD_WIN32: true, USE_MSVC_RUNTIME_LIBRARY_DLL: true
-                windowsX64.outputFile link: 'glfw3.dll.lib'
+                windowsX64.outputFile link: 'glfw3dll.lib'
             }
         }
     }
