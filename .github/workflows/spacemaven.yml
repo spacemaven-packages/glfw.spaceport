@@ -61,7 +61,7 @@ jobs:
         run: ./gradlew build
       - name: List files
         if: matrix.os == 'windows-latest'
-        run: dir build\cmake\sharedLibrary\debug\windows\x86-64\src
+        run: dir spaceport\glfw\build\cmake\sharedLibrary\debug\windows\x86-64\src
       - name: Publish Project
         if: env.SPACEPORT_READY
         run: ./gradlew ${{ matrix.tasks }}
